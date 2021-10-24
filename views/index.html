@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://bootswatch.com/5/sketchy/bootstrap.min.css">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/style.css">
+
 </head>
 
 <body>
@@ -18,16 +20,16 @@
         <!-- Main -->
         <main class="container-fluid bg-warning text-center py-5">
             <!-- Header -->
-            <header class="row py-5 text-light">
+            <header class="row mt-5 text-light">
                 <h1>Click and get a new Dad Joke</h1>
             </header>
 
             <!-- Content -->
             <article class="row justify-content-center">
-                <button class="btn btn-lg btn-info border border-primary w-50 my-2 shadow">Click!</button>
+                <input type="submit" class="btn btn-lg btn-info border border-primary w-50 my-5 shadow" id="action-button" value="Click!">
 
                 <!-- APP -->
-                <div class="app">
+                <div class="row" id="app">
 
                 </div>
             </article>
@@ -41,6 +43,9 @@
             </p>
         </footer>
     </div>
+
+    <!--  -->
+    <script src="../controller/jokes-controller.js"></script>
 
 </body>
 

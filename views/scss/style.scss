@@ -1,6 +1,7 @@
 $footer-height: 150px;
 .page {
     height: 100vh;
+    font-size: 2rem;
 }
 
 .container-fluid {
@@ -16,4 +17,5 @@ h1 {
 
 footer {
     height: $footer-height;
+    font-size: 1.5rem;
 }

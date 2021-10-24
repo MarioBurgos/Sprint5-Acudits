@@ -1,0 +1,21 @@
+.page {
+    height: 100vh;
+}
+
+.container-fluid {
+    min-height: calc(100vh - 150px);
+    background-image: url("https://doodad.dev/pattern-generator?ref=lapaninja");
+}
+
+h1 {
+    font-size: 3.5rem;
+    font-weight: 600;
+    text-shadow: 2px 2px #000;
+}
+
+footer {
+    height: 150px;
+}
+
+
+/*# sourceMappingURL=style.css.map */
