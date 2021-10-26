@@ -16,37 +16,43 @@
 </head>
 
 <body>
+
     <div class="page">
+        <!-- Header Navigation -->
+        <header class="bg-dark">
+            <div id="app-weather">
+                <p class="ms-3 text-light">{#Openweathermap}</p>
+            </div>
+        </header>
         <!-- Main -->
-        <main class="container-fluid bg-warning text-center py-5">
-            <!-- Header -->
-            <header class="row mt-5 text-light">
-                <h1>Click and get a new Dad Joke</h1>
-            </header>
-
+        <main class="container-fluid text-center py-5">
             <!-- Content -->
-            <article class="row justify-content-center">
-                <input type="submit" class="btn btn-lg btn-info border border-primary w-50 my-5 shadow" id="action-button" value="Click!">
-
-                <!-- APP -->
-                <div class="row" id="app">
-
+            <div class="card w-75 mx-auto mt-3 p-5">
+                <div class="card-title">
+                    <h1>Click and get a new Dad Joke</h1>
                 </div>
-            </article>
+                <article class="row justify-content-center">
+                    <input type="submit" class="btn btn-lg btn-info border border-primary w-50 my-5 shadow" id="action-button" value="Click!">
+
+                    <!-- APP -->
+                    <div class="row" id="app-jokes">
+                    </div>
+                </article>
+            </div>
+
         </main>
         <!-- Footer -->
         <footer class="text-center text-light bg-primary d-flex flex-column justify-content-center ">
-            <h6 class="h6 m-auto">Created by Mario Burgos</h6>
+            <h2 class="h2 m-auto">Created by Mario Burgos</h2>
             <!-- Credits -->
             <p>
-                This page is using the API from <span class="text-warning">https://icanhazdadjoke.com/api</span> (Click <a href="https://icanhazdadjoke.com/api" target="_blank" class="text-info">here</a> for more information)
+                Powered by <a href="https://icanhazdadjoke.com/api" target="_blank" class="text-info">https://icanhazdadjoke.com/api</a> & <a href="https://openweathermap.org/api" target="_blank" class="text-info">https://openweathermap.org/api</a>
             </p>
         </footer>
     </div>
 
     <!--  -->
     <script src="../controller/jokes-controller.js"></script>
-
 </body>
 
 </html>

@@ -1,21 +1,42 @@
-$footer-height: 150px;
+$header-height: 60px;
+$footer-height: 120px;
+$low-opacity: 0.8;
+$translucid: 0.25;
 .page {
     height: 100vh;
     font-size: 2rem;
 }
 
 .container-fluid {
-    min-height: calc(100vh - 150px);
-    background-image: url("https://doodad.dev/pattern-generator?ref=lapaninja");
+    min-height: calc(100vh - 80px);
+}
+
+.container-fluid::after {
+    content: "";
+    background-image: url("../assets/laughing-ppl.png");
+    background-size: cover;
+    background-position: 10px 200px;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
+
+.card {
+    opacity: $low-opacity;
 }
 
 h1 {
     font-size: 3rem;
     font-weight: 600;
-    text-shadow: 2px 2px #000;
+    text-shadow: 2px 2px rgb(255, 200, 0);
 }
 
 footer {
     height: $footer-height;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }

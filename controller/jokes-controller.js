@@ -34,9 +34,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+/** Esta clase define la estructura de Joke.  Tiene un método que bebe de una API y devuelve nuevos Jokes. */
 var Joke = /** @class */ (function () {
     function Joke() {
     }
+    /** La función realiza una llamada a la API y construye/devuelve un objeto Joke con los datos de la respuesta */
     Joke.prototype.fetchAJoke = function () {
         return __awaiter(this, void 0, void 0, function () {
             var url, options, response, joke;
@@ -63,21 +65,22 @@ var Joke = /** @class */ (function () {
     };
     return Joke;
 }());
+/** Esta clase tiene métodos para gestionar la vista */
 var UI = /** @class */ (function () {
     function UI() {
     }
     UI.prototype.showJoke = function (data) {
-        var app = document.querySelector('#app');
+        var app = document.querySelector('#app-jokes');
         var div = document.createElement('div');
         if (app.hasChildNodes) {
             app.firstChild.remove();
         }
-        div.innerHTML = "\n        <div class=\"card w-75 m-auto px-3 py-2 shadow\">\n            <p class=\"text-start\"> " + data.joke + "</p>\n        </div>\n        ";
+        div.innerHTML = "\n        <div class=\"w-75 m-auto px-3 py-2\">\n            <p class=\"text-start\"> " + data.joke + "</p>\n        </div>\n        ";
         app.appendChild(div);
     };
     return UI;
 }());
-// DOM Events
+// DOM Events Controller
 document.querySelector('#action-button')
     .addEventListener('click', function (e) {
     var ui = new UI();
@@ -85,7 +88,6 @@ document.querySelector('#action-button')
     joke.fetchAJoke()
         .then(function (response) {
         joke = response;
-        console.log(joke);
         ui.showJoke(response);
     })["catch"](function (error) { return console.error(error); })["finally"](function () { return console.log('Completed!'); });
 });
