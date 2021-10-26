@@ -42,22 +42,25 @@ var Joke = /** @class */ (function () {
     }
     Joke.prototype.fetchAJoke = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var api, proxy, url, headers;
+            var url, options, response, joke, newJoke;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        api = "https://icanhazdadjoke.com/";
-                        proxy = "https://api.allorigins.win/get?url=";
-                        url = "" + proxy + encodeURIComponent(api);
-                        headers = new Headers();
-                        headers.append('Content-Type', 'application/json');
-                        headers.append('Accept', 'application/json');
-                        return [4 /*yield*/, fetch(url, { method: "GET", headers: headers })
-                                .then(function (response) { return console.log(response.text()); })
-                                .then(function (data) { return console.log(data); })["catch"](function (error) { return console.error(error); })];
+                        url = 'https://icanhazdadjoke.com/';
+                        options = {
+                            method: 'GET',
+                            headers: {
+                                "Accept": "application/json"
+                            }
+                        };
+                        return [4 /*yield*/, fetch(url, options)];
                     case 1:
-                        _a.sent();
-                        return [2 /*return*/];
+                        response = _a.sent();
+                        return [4 /*yield*/, response.json()];
+                    case 2:
+                        joke = _a.sent();
+                        newJoke = joke.joke;
+                        return [2 /*return*/, newJoke];
                 }
             });
         });
@@ -73,7 +76,7 @@ var UI = /** @class */ (function () {
         if (app.hasChildNodes) {
             app.firstChild.remove();
         }
-        div.innerHTML = "\n        <div class=\"card w-75 m-auto px-3 py-2 shadow\">\n            <p class=\"text-start\"> " + data.string + "</p>\n        </div>\n        ";
+        div.innerHTML = "\n        <div class=\"card w-75 m-auto px-3 py-2 shadow\">\n            <p class=\"text-start\"> " + data + "</p>\n        </div>\n        ";
         app.appendChild(div);
     };
     return UI;
@@ -83,14 +86,10 @@ document.querySelector('#action-button')
     .addEventListener('click', function (e) {
     var ui = new UI();
     var joke = new Joke("id", "this is a joke", 0);
-    // joke.fetchAJoke()
-    var proxy = "https://api.allorigins.win/get?url="; // https://allorigins.win/
-    var api = proxy + "https://icanhazdadjoke.com/";
-    var headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    headers.append('Accept', 'application/json');
-    fetch(api, { method: "GET", headers: headers })
-        .then(function (response) { return response.json(); })
-        .then(function (data) { return console.log(data); })["catch"](function (error) { return console.error(error); });
-    // ui.showJoke(joke);
+    var fetchData = new Promise(function (res, err) {
+        var value = joke.fetchAJoke();
+        res(value);
+    });
+    fetchData
+        .then(function (value) { return ui.showJoke(value); })["catch"](function (error) { return console.error(error); })["finally"](function () { return console.log('Completed!'); });
 });

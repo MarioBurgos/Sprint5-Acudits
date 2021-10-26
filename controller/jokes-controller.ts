@@ -10,25 +10,24 @@ class Joke {
     }
 
     async fetchAJoke() {
-        // 
-        const api = `https://icanhazdadjoke.com/`;
-        const proxy = "https://api.allorigins.win/get?url=";  // https://allorigins.win/
-        const url = `${proxy}${encodeURIComponent(api)}`;
+        //settings API call
+        const url = 'https://icanhazdadjoke.com/';
+        let options = {
+            method: 'GET',
+            headers: {
+                "Accept": "application/json",
+            }
+        };
 
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-
-        await fetch(url, { method: "GET", headers: headers })
-            .then(response => console.log(response.text()))
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
-
+        const response = await fetch(url, options)
+        const joke = await response.json();
+        let newJoke = joke.joke;
+        return newJoke;
     }
 }
 
 class UI {
-    showJoke(data: Joke) {
+    showJoke(data: string) {
         const app = document.querySelector('#app');
         const div = document.createElement('div');
         if (app.hasChildNodes) {
@@ -36,7 +35,7 @@ class UI {
         }
         div.innerHTML = `
         <div class="card w-75 m-auto px-3 py-2 shadow">
-            <p class="text-start"> ${data.string}</p>
+            <p class="text-start"> ${data}</p>
         </div>
         `;
         app.appendChild(div);
@@ -48,19 +47,14 @@ document.querySelector('#action-button')
     .addEventListener('click', (e) => {
         const ui = new UI();
         let joke = new Joke("id", "this is a joke", 0);
-        // joke.fetchAJoke()
-        const proxy = "https://api.allorigins.win/get?url=";  // https://allorigins.win/
-        const api = `${proxy}https://icanhazdadjoke.com/`;
 
-
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-        headers.append('Accept', 'application/json');
-
-        fetch(api, { method: "GET", headers: headers})
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(error => console.error(error));
-        // ui.showJoke(joke);
+        const fetchData = new Promise<string>((res, err) => {
+            const value = joke.fetchAJoke();
+            res(value);
+        });
+        fetchData
+            .then(value => ui.showJoke(value))
+            .catch(error => console.error(error))
+            .finally(() => console.log('Completed!'));
     });
 
