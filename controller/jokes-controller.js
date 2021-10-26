@@ -86,10 +86,6 @@ document.querySelector('#action-button')
     .addEventListener('click', function (e) {
     var ui = new UI();
     var joke = new Joke("id", "this is a joke", 0);
-    var fetchData = new Promise(function (res, err) {
-        var value = joke.fetchAJoke();
-        res(value);
-    });
-    fetchData
+    joke.fetchAJoke()
         .then(function (value) { return ui.showJoke(value); })["catch"](function (error) { return console.error(error); })["finally"](function () { return console.log('Completed!'); });
 });

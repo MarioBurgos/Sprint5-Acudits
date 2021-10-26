@@ -9,19 +9,19 @@ class Joke {
         this.status = status;
     }
 
-    async fetchAJoke() {
+    async fetchAJoke():Promise<string> {
         //settings API call
-        const url = 'https://icanhazdadjoke.com/';
-        let options = {
+        const url:string = 'https://icanhazdadjoke.com/';
+        let options:object = {
             method: 'GET',
             headers: {
                 "Accept": "application/json",
             }
         };
-
-        const response = await fetch(url, options)
+ 
+        const response:Response = await fetch(url, options);
         const joke = await response.json();
-        let newJoke = joke.joke;
+        let newJoke:string = joke.joke;
         return newJoke;
     }
 }
@@ -48,11 +48,7 @@ document.querySelector('#action-button')
         const ui = new UI();
         let joke = new Joke("id", "this is a joke", 0);
 
-        const fetchData = new Promise<string>((res, err) => {
-            const value = joke.fetchAJoke();
-            res(value);
-        });
-        fetchData
+        joke.fetchAJoke()
             .then(value => ui.showJoke(value))
             .catch(error => console.error(error))
             .finally(() => console.log('Completed!'));
