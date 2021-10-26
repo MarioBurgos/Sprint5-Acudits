@@ -35,14 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 var Joke = /** @class */ (function () {
-    function Joke(id, string, status) {
-        this.id = id;
-        this.string = string;
-        this.status = status;
+    function Joke() {
     }
     Joke.prototype.fetchAJoke = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var url, options, response, joke, newJoke;
+            var url, options, response, joke;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -59,8 +56,7 @@ var Joke = /** @class */ (function () {
                         return [4 /*yield*/, response.json()];
                     case 2:
                         joke = _a.sent();
-                        newJoke = joke.joke;
-                        return [2 /*return*/, newJoke];
+                        return [2 /*return*/, joke];
                 }
             });
         });
@@ -76,7 +72,7 @@ var UI = /** @class */ (function () {
         if (app.hasChildNodes) {
             app.firstChild.remove();
         }
-        div.innerHTML = "\n        <div class=\"card w-75 m-auto px-3 py-2 shadow\">\n            <p class=\"text-start\"> " + data + "</p>\n        </div>\n        ";
+        div.innerHTML = "\n        <div class=\"card w-75 m-auto px-3 py-2 shadow\">\n            <p class=\"text-start\"> " + data.joke + "</p>\n        </div>\n        ";
         app.appendChild(div);
     };
     return UI;
@@ -85,7 +81,11 @@ var UI = /** @class */ (function () {
 document.querySelector('#action-button')
     .addEventListener('click', function (e) {
     var ui = new UI();
-    var joke = new Joke("id", "this is a joke", 0);
+    var joke = new Joke();
     joke.fetchAJoke()
-        .then(function (value) { return ui.showJoke(value); })["catch"](function (error) { return console.error(error); })["finally"](function () { return console.log('Completed!'); });
+        .then(function (response) {
+        joke = response;
+        console.log(joke);
+        ui.showJoke(response);
+    })["catch"](function (error) { return console.error(error); })["finally"](function () { return console.log('Completed!'); });
 });
