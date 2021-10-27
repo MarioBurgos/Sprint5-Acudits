@@ -75,7 +75,7 @@ var UI = /** @class */ (function () {
         if (app.hasChildNodes) {
             app.firstChild.remove();
         }
-        div.innerHTML = "\n        <div class=\"w-75 m-auto px-3 py-2\">\n            <p class=\"text-start\"> " + data.joke + "</p>\n        </div>\n        ";
+        div.innerHTML = "\n        <div class=\"m-auto px-3 py-2\">\n            <p class=\"text-start\"> " + data.joke + "</p>\n        </div>\n        ";
         app.appendChild(div);
     };
     return UI;
@@ -89,5 +89,5 @@ document.querySelector('#action-button')
         .then(function (response) {
         joke = response;
         ui.showJoke(response);
-    })["catch"](function (error) { return console.error(error); })["finally"](function () { return console.log('Completed!'); });
+    })["catch"](function (error) { return console.error(error); });
 });

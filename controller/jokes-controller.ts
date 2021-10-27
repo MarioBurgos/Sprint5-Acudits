@@ -29,7 +29,7 @@ class UI {
             app.firstChild.remove();
         }
         div.innerHTML = `
-        <div class="w-75 m-auto px-3 py-2">
+        <div class="m-auto px-3 py-2">
             <p class="text-start"> ${data.joke}</p>
         </div>
         `;
@@ -51,6 +51,5 @@ document.querySelector('#action-button')
                 ui.showJoke(response)
             })
             .catch(error => console.error(error))
-            .finally(() => console.log('Completed!'));
     });
 

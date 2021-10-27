@@ -1,21 +1,33 @@
 $header-height: 60px;
 $footer-height: 120px;
-$low-opacity: 0.8;
+$low-opacity: 0.9;
 $translucid: 0.25;
+@media (min-width: 768px) {
+    .card {
+        width: 100%;
+    }
+}
+
+@media (min-width: 992px) {
+    .card {
+        width: 50%;
+    }
+}
+
 .page {
     height: 100vh;
     font-size: 2rem;
 }
 
 .container-fluid {
-    min-height: calc(100vh - 80px);
+    min-height: calc(100vh - 140px);
 }
 
 .container-fluid::after {
     content: "";
     background-image: url("../assets/laughing-ppl.png");
     background-size: cover;
-    background-position: 10px 200px;
+    background-position: center 175px;
     background-repeat: no-repeat;
     opacity: 0.4;
     top: 0;
@@ -28,12 +40,13 @@ $translucid: 0.25;
 
 .card {
     opacity: $low-opacity;
+    margin-top: 5%;
 }
 
 h1 {
     font-size: 3rem;
     font-weight: 600;
-    text-shadow: 2px 2px rgb(255, 200, 0);
+    text-shadow: 2px 2px rgb(0, 175, 215);
 }
 
 footer {
