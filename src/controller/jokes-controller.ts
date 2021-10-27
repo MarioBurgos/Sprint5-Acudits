@@ -7,7 +7,7 @@ interface IJoke {
 interface IScore {
     joke: Joke;
     score: number;
-    date: Date;
+    date: string;
 }
 // import { IJoke } from '../interfaces/ijoke';
 // import { IScore } from '../interfaces/iscore'
@@ -39,18 +39,30 @@ class Joke implements IJoke {
     }
 }
 
+/** Esta classe representa las puntuaciones de los chistes */
+class Score implements IScore{
+    joke: Joke;
+    score: number;
+    date: string;
+
+    constructor(joke: Joke, score: number){
+        this.joke = joke;
+        this.score = score; 
+        this.date = new Date().toISOString();
+    }
+}
 /** Esta class realiza el seguimiento de uso de la web.  
  * Tiene un array que guarda objetos del tipo { joke: string, score: number, date: date }
  * Tiene un método que muestra por consola el report
  */
 class Report {
-    jokesReport: Array<IScore>;
+    jokesReport: Array<Score>;
 
     constructor() {
         this.jokesReport = [];
     }
 
-    addScore(score: IScore) {
+    addScore(score: Score) {
         this.jokesReport.push(score);
     }
 }
@@ -98,6 +110,9 @@ class UI {
             b.value = `${btnValue[i]}`;
             buttonGroup.appendChild(b);
         }
+        if (container.childElementCount >= 3) {
+            container.removeChild(buttonGroup);
+        }
         container?.insertBefore(buttonGroup, app);
     }
 
@@ -106,11 +121,14 @@ class UI {
 
 // DOM Events Controller
 
+// una variable Joke que actuará de forma global para poder pasar el chiste al listener de score
+let joke: Joke;
+
 /**Este listener del action-button representa el botón principal que muestra DadJokes */
 document.querySelector('#action-button')!
     .addEventListener('click', (e) => {
         const ui: UI = new UI();
-        let joke: Joke = new Joke();
+        joke = new Joke();
 
         joke.fetchAJoke()
             .then(response => {
@@ -124,8 +142,13 @@ document.querySelector('#action-button')!
 /** Con este listener se apunta al buttonGroup, aunque en realidad va a tomar el valor de (e).target que serán los 3 botones de rating.
  * Cuando tome el valor del botón (su score), lo almacenará en un array de scores.
 */
-document.querySelector('#buttonGroup')!
-    .addEventListener('click', (e) => {
-        // const report
+
+//TODO:   está petando aqui porque al crear la vista aún no existen estos botones
+document.querySelector('#button-1')!
+    .addEventListener('submit', (e) => {  //TODO revisar la manera de tomar el value del botón que ha sido pulsado
+        const report = new Report();
+        const score = new Score(joke, 0);
+        report.addScore(score);
+        console.log(report.jokesReport);
     });
 

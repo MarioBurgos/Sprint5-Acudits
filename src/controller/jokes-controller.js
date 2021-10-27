@@ -70,6 +70,15 @@ var Joke = /** @class */ (function () {
     };
     return Joke;
 }());
+/** Esta classe representa las puntuaciones de los chistes */
+var Score = /** @class */ (function () {
+    function Score(joke, score) {
+        this.joke = joke;
+        this.score = score;
+        this.date = new Date().toISOString();
+    }
+    return Score;
+}());
 /** Esta class realiza el seguimiento de uso de la web.
  * Tiene un array que guarda objetos del tipo { joke: string, score: number, date: date }
  * Tiene un método que muestra por consola el report
@@ -119,16 +128,21 @@ var UI = /** @class */ (function () {
             b.value = "" + btnValue[i];
             buttonGroup.appendChild(b);
         }
+        if (container.childElementCount >= 3) {
+            container.removeChild(buttonGroup);
+        }
         container === null || container === void 0 ? void 0 : container.insertBefore(buttonGroup, app);
     };
     return UI;
 }());
 // DOM Events Controller
+// una variable Joke que actuará de forma global para poder pasar el chiste al listener de score
+var joke;
 /**Este listener del action-button representa el botón principal que muestra DadJokes */
 document.querySelector('#action-button')
     .addEventListener('click', function (e) {
     var ui = new UI();
-    var joke = new Joke();
+    joke = new Joke();
     joke.fetchAJoke()
         .then(function (response) {
         joke = response;
@@ -139,7 +153,11 @@ document.querySelector('#action-button')
 /** Con este listener se apunta al buttonGroup, aunque en realidad va a tomar el valor de (e).target que serán los 3 botones de rating.
  * Cuando tome el valor del botón (su score), lo almacenará en un array de scores.
 */
-document.querySelector('#buttonGroup')
-    .addEventListener('click', function (e) {
-    // const report
+//TODO:   está petando aqui porque al crear la vista aún no existen estos botones
+document.querySelector('#button-1')
+    .addEventListener('submit', function (e) {
+    var report = new Report();
+    var score = new Score(joke, 0);
+    report.addScore(score);
+    console.log(report.jokesReport);
 });
