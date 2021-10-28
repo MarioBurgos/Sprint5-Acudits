@@ -85,10 +85,15 @@ var Score = /** @class */ (function () {
  */
 var Report = /** @class */ (function () {
     function Report() {
-        this.jokesReport = [];
+        this.jokesReport = new Array();
     }
     Report.prototype.addScore = function (score) {
-        this.jokesReport.push(score);
+        if (this.jokesReport.find(function (item) { return score.joke === item.joke; })) {
+            //do nothing
+        }
+        else {
+            this.jokesReport.push(score);
+        }
     };
     return Report;
 }());
@@ -112,6 +117,7 @@ var UI = /** @class */ (function () {
     UI.prototype.showRatingButtons = function () {
         var app = document.querySelector('#app-jokes');
         var container = document.querySelector('#container');
+        var div = document.querySelector('#buttonGroup'); //esta variable controla si el elemento ya existe en el DOM
         var buttonGroup = document.createElement('div');
         var btnBg = ['danger', 'warning', 'success']; //un array para pintar los botones dentro de un bucle
         var btnValue = ['Just... NO', 'He he', 'I loled!']; //un array para pintar los botones dentro de un bucle
@@ -129,7 +135,7 @@ var UI = /** @class */ (function () {
             buttonGroup.appendChild(b);
         }
         if (container.childElementCount >= 3) {
-            container.removeChild(buttonGroup);
+            container.removeChild(div);
         }
         container === null || container === void 0 ? void 0 : container.insertBefore(buttonGroup, app);
     };

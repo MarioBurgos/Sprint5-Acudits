@@ -56,10 +56,15 @@ class Score implements IScore {
 class Report {
     jokesReport: Array<Score>;
     constructor() {
-        this.jokesReport = [];
+        this.jokesReport = new Array<Score>();
     }
     addScore(score: Score) {
-        this.jokesReport.push(score);
+        if(this.jokesReport.find(item => score.joke === item.joke)){
+            //do nothing
+        }else{
+            this.jokesReport.push(score);
+
+        }
     }
 }
 
@@ -87,6 +92,7 @@ class UI {
     showRatingButtons() {
         const app: HTMLDivElement = document.querySelector('#app-jokes')!;
         const container: HTMLDivElement = document.querySelector('#container')!;
+        const div: HTMLDivElement = document.querySelector('#buttonGroup')!; //esta variable controla si el elemento ya existe en el DOM
 
         const buttonGroup: HTMLDivElement = document.createElement('div');
         const btnBg: Array<string> = ['danger', 'warning', 'success']; //un array para pintar los botones dentro de un bucle
@@ -106,7 +112,7 @@ class UI {
             buttonGroup.appendChild(b);
         }
         if (container.childElementCount >= 3) {
-            container.removeChild(buttonGroup);
+            container.removeChild(div);
         }
         container?.insertBefore(buttonGroup, app);
     }
