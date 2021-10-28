@@ -9,8 +9,8 @@
 //     score: number;
 //     date: string;
 // }
-// // import { IJoke } from '../interfaces/ijoke';
-// // import { IScore } from '../interfaces/iscore'
+// // import IJoke from '../interfaces/ijoke';
+// // import IScore  from '../interfaces/iscore';
 
 // /** Esta clase define la estructura de Joke.  Tiene un método que bebe de una API y devuelve nuevos Jokes. */
 // class Joke implements IJoke {

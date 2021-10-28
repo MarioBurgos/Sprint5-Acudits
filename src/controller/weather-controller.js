@@ -70,55 +70,68 @@ var Weather = /** @class */ (function () {
             });
         });
     };
-    Weather.prototype.getCoords = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var result;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        result = [];
-                        if (!navigator.geolocation) return [3 /*break*/, 2];
-                        return [4 /*yield*/, navigator.geolocation.getCurrentPosition(function (position) {
-                                result.push(position.coords.latitude.toString());
-                                result.push(position.coords.longitude.toString());
-                                console.log("getCoords(): lat=" + result[0] + " / long: " + result[1]);
-                                return result;
-                            })];
-                    case 1:
-                        _a.sent();
-                        _a.label = 2;
-                    case 2: return [2 /*return*/, result];
-                }
-            });
-        });
-    };
+    // async getCoords(): Promise<Array<string>> {
+    //     let result: Array<string> = [];
+    //     if (navigator.geolocation) {
+    //         await navigator.geolocation.getCurrentPosition((position) => {
+    //             result.push(position.coords.latitude.toString());
+    //             result.push(position.coords.longitude.toString());
+    //             console.log(`getCoords(): lat=${result[0]} / long: ${result[1]}`);
+    //             return result;
+    //         });
+    //     }
+    //     return result;
+    // }
     Weather.prototype.getLocationName = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var locationName, appId, coords, urlReverseGeocoding, options, response;
+            var locationName, appId, coords;
+            var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         locationName = '';
                         appId = 'b0147f6411b11c4795a9f9e4bebc27a3';
-                        return [4 /*yield*/, this.getCoords()];
+                        coords = [];
+                        if (!navigator.geolocation) return [3 /*break*/, 2];
+                        return [4 /*yield*/, navigator.geolocation.getCurrentPosition(function (position) { return __awaiter(_this, void 0, void 0, function () {
+                                var urlReverseGeocoding, options, response;
+                                return __generator(this, function (_a) {
+                                    switch (_a.label) {
+                                        case 0:
+                                            coords.push(position.coords.latitude.toString());
+                                            coords.push(position.coords.longitude.toString());
+                                            // console.log(`getCoords(): lat=${coords[0]} / long: ${coords[1]}`);
+                                            console.log("getCoords(): lat=" + coords[0] + " / long: " + coords[1]);
+                                            urlReverseGeocoding = "http://api.openweathermap.org/geo/1.0/reverse?lat=" + coords[0] + "&lon=" + coords[1] + "&appid=" + appId;
+                                            options = {
+                                                method: 'GET',
+                                                headers: {
+                                                    "Accept": "application/json"
+                                                }
+                                            };
+                                            return [4 /*yield*/, fetch(urlReverseGeocoding, options)];
+                                        case 1:
+                                            response = _a.sent();
+                                            return [4 /*yield*/, response.json()];
+                                        case 2:
+                                            locationName = _a.sent();
+                                            console.log(locationName); //hasta aqui llega el nombre en un json
+                                            /**
+                                             * 0:
+                                            country: "ES"
+                                            lat: 41.3773
+                                            local_names: {ascii: 'Esplugues de Llobregat', ca: 'Esplugues de Llobregat', de: 'Esplugues de Llobregat', en: 'Esplugues de Llobregat', eu: 'Esplugues de Llobregat', …}
+                                            lon: 2.0881
+                                            name: "Esplugues de Llobregat"
+                                             */
+                                            return [2 /*return*/, locationName];
+                                    }
+                                });
+                            }); })];
                     case 1:
-                        coords = _a.sent();
-                        console.log("getLocationName(): lat=" + coords[0] + " / long: " + coords[1]);
-                        urlReverseGeocoding = "http://api.openweathermap.org/geo/1.0/reverse?lat=" + coords[0] + "&lon=" + coords[1] + "&appid=" + appId;
-                        options = {
-                            method: 'GET',
-                            headers: {
-                                "Accept": "application/json"
-                            }
-                        };
-                        return [4 /*yield*/, fetch(urlReverseGeocoding, options)];
-                    case 2:
-                        response = _a.sent();
-                        console.log(response);
-                        return [4 /*yield*/, response.json()];
-                    case 3:
-                        locationName = _a.sent();
-                        return [2 /*return*/, locationName];
+                        _a.sent();
+                        _a.label = 2;
+                    case 2: return [2 /*return*/, locationName];
                 }
             });
         });

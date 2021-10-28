@@ -29,34 +29,49 @@ class Weather implements IWeather {
         return weatherInfo;
     }
 
-    async getCoords(): Promise<Array<string>> {
-        let result: Array<string> = [];
+    // async getCoords(): Promise<Array<string>> {
+    //     let result: Array<string> = [];
+    //     if (navigator.geolocation) {
+    //         await navigator.geolocation.getCurrentPosition((position) => {
+    //             result.push(position.coords.latitude.toString());
+    //             result.push(position.coords.longitude.toString());
+    //             console.log(`getCoords(): lat=${result[0]} / long: ${result[1]}`);
+    //             return result;
+    //         });
+    //     }
+    //     return result;
+    // }
+    async getLocationName(): Promise<any> {
+        let locationName: string = '';
+        const appId: string = 'b0147f6411b11c4795a9f9e4bebc27a3';
+        let coords: Array<string> = [];
         if (navigator.geolocation) {
-            await navigator.geolocation.getCurrentPosition((position) => {
-                result.push(position.coords.latitude.toString());
-                result.push(position.coords.longitude.toString());
-                console.log(`getCoords(): lat=${result[0]} / long: ${result[1]}`);
-                return result;
+            await navigator.geolocation.getCurrentPosition(async (position) => {
+                coords.push(position.coords.latitude.toString());
+                coords.push(position.coords.longitude.toString());
+                // console.log(`getCoords(): lat=${coords[0]} / long: ${coords[1]}`);
+                console.log(`getCoords(): lat=${coords[0]} / long: ${coords[1]}`);
+                const urlReverseGeocoding: string = `http://api.openweathermap.org/geo/1.0/reverse?lat=${coords[0]}&lon=${coords[1]}&appid=${appId}`;
+                let options: object = {
+                    method: 'GET',
+                    headers: {
+                        "Accept": "application/json",
+                    }
+                };
+                const response: Response = await fetch(urlReverseGeocoding, options);
+                locationName = await response.json();
+                console.log(locationName); //hasta aqui llega el nombre en un json
+                /**
+                 * 0:
+                country: "ES"
+                lat: 41.3773
+                local_names: {ascii: 'Esplugues de Llobregat', ca: 'Esplugues de Llobregat', de: 'Esplugues de Llobregat', en: 'Esplugues de Llobregat', eu: 'Esplugues de Llobregat', …}
+                lon: 2.0881
+                name: "Esplugues de Llobregat"
+                 */
+                return locationName;
             });
         }
-        return result;
-    }
-    async getLocationName(): Promise<any> {
-        let locationName: any = '';
-        const appId: string = 'b0147f6411b11c4795a9f9e4bebc27a3';
-        const coords: Array<string> = await this.getCoords();
-        console.log(`getLocationName(): lat=${coords[0]} / long: ${coords[1]}`);
-        const urlReverseGeocoding: string = `http://api.openweathermap.org/geo/1.0/reverse?lat=${coords[0]}&lon=${coords[1]}&appid=${appId}`;
-        let options: object = {
-            method: 'GET',
-            headers: {
-                "Accept": "application/json",
-            }
-        };
-        const response: Response = await fetch(urlReverseGeocoding, options);
-        console.log(response);
-        locationName = await response.json();
-
         return locationName;
     }
 }
