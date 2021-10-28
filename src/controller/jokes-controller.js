@@ -122,7 +122,7 @@ var UI = /** @class */ (function () {
         for (var i = 0; i < 3; i++) {
             var b = document.createElement('input');
             b.className = "btn btn-" + btnBg[i] + " ";
-            b.id = "button-" + (i + 1);
+            b.id = "score-button";
             b.name = "" + (i + 1);
             b.type = "submit";
             b.value = "" + btnValue[i];
@@ -138,26 +138,24 @@ var UI = /** @class */ (function () {
 // DOM Events Controller
 // una variable Joke que actuará de forma global para poder pasar el chiste al listener de score
 var joke;
-/**Este listener del action-button representa el botón principal que muestra DadJokes */
-document.querySelector('#action-button')
-    .addEventListener('click', function (e) {
-    var ui = new UI();
-    joke = new Joke();
-    joke.fetchAJoke()
-        .then(function (response) {
-        joke = response;
-        ui.showJoke(response);
-        ui.showRatingButtons();
-    })["catch"](function (error) { return console.error(error); });
-});
-/** Con este listener se apunta al buttonGroup, aunque en realidad va a tomar el valor de (e).target que serán los 3 botones de rating.
- * Cuando tome el valor del botón (su score), lo almacenará en un array de scores.
-*/
-//TODO:   está petando aqui porque al crear la vista aún no existen estos botones
-document.querySelector('#button-1')
-    .addEventListener('submit', function (e) {
-    var report = new Report();
-    var score = new Score(joke, 0);
-    report.addScore(score);
-    console.log(report.jokesReport);
+var report = new Report();
+document.addEventListener('click', function (evt) {
+    switch (evt.target.id) {
+        case "action-button":
+            var ui_1 = new UI();
+            joke = new Joke();
+            joke.fetchAJoke()
+                .then(function (response) {
+                joke = response;
+                ui_1.showJoke(response);
+                ui_1.showRatingButtons();
+            })["catch"](function (error) { return console.error(error); });
+            break;
+        case "score-button":
+            var points = parseInt(evt.target.name);
+            var score = new Score(joke, points);
+            report.addScore(score);
+            console.log(report);
+            break;
+    }
 });
