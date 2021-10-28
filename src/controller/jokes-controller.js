@@ -88,6 +88,7 @@ var Report = /** @class */ (function () {
         this.jokesReport = new Array();
     }
     Report.prototype.addScore = function (score) {
+        //una condición para evitar puntuar el mismo chiste 2 veces
         if (this.jokesReport.find(function (item) { return score.joke === item.joke; })) {
             //do nothing
         }

@@ -59,6 +59,7 @@ class Report {
         this.jokesReport = new Array<Score>();
     }
     addScore(score: Score) {
+        //una condición para evitar puntuar el mismo chiste 2 veces
         if(this.jokesReport.find(item => score.joke === item.joke)){
             //do nothing
         }else{
