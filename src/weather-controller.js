@@ -46,6 +46,9 @@ var Weather = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        setTimeout(function () {
+                            //gran parche que hace que la request del tiempo se espere medio segundo para que así le de tiempo de finalizarse a la otra request de coordenadas
+                        }, 500);
                         appId = 'b0147f6411b11c4795a9f9e4bebc27a3';
                         units = 'metric';
                         url = "http://api.openweathermap.org/data/2.5/weather?appid=" + appId + "&units=" + units + "&lat=" + coords[0] + "&lon=" + coords[1];

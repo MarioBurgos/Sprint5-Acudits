@@ -13,6 +13,9 @@ class Weather implements IWeather {
 
     // La función realiza una llamada a la API y construye/devuelve un objeto Joke con los datos de la respuesta 
     async fetchWeather(coords: Array<string>): Promise<any> {
+        setTimeout(() => {
+            //gran parche que hace que la request del tiempo se espere medio segundo para que así le de tiempo de finalizarse a la otra request de coordenadas
+        }, 500);
         //settings API call
         const appId: string = 'b0147f6411b11c4795a9f9e4bebc27a3';
         const units: string = 'metric';
