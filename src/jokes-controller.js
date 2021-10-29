@@ -46,7 +46,7 @@ var Joke = /** @class */ (function () {
         this.status = -1;
     }
     // La función realiza una llamada a la API y construye/devuelve un objeto Joke con los datos de la respuesta 
-    Joke.prototype.fetchAJoke = function () {
+    Joke.prototype.fetchADadJoke = function () {
         return __awaiter(this, void 0, void 0, function () {
             var url, options, response, joke;
             return __generator(this, function (_a) {
@@ -174,7 +174,7 @@ document.addEventListener('click', function (evt) {
         case "action-button":
             var ui_1 = new UI();
             joke = new Joke();
-            joke.fetchAJoke()
+            joke.fetchADadJoke()
                 .then(function (response) {
                 joke = response;
                 ui_1.showJoke(response);

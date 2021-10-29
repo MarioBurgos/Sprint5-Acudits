@@ -25,7 +25,7 @@ class Joke implements IJoke {
         this.status = -1;
     }
     // La función realiza una llamada a la API y construye/devuelve un objeto Joke con los datos de la respuesta 
-    async fetchAJoke(): Promise<Joke> {
+    async fetchADadJoke(): Promise<Joke> {
         //settings API call
         const url: string = 'https://icanhazdadjoke.com/';
         let options: object = {
@@ -147,7 +147,7 @@ document.addEventListener('click', (evt) => {
         case "action-button":
             const ui: UI = new UI();
             joke = new Joke();
-            joke.fetchAJoke()
+            joke.fetchADadJoke()
                 .then(response => {
                     joke = response;
                     ui.showJoke(response);

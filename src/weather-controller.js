@@ -42,13 +42,12 @@ var Weather = /** @class */ (function () {
     // La función realiza una llamada a la API y construye/devuelve un objeto Joke con los datos de la respuesta 
     Weather.prototype.fetchWeather = function (coords) {
         return __awaiter(this, void 0, void 0, function () {
-            var appId, units, lang, url, options, response, weatherInfo;
+            var appId, units, url, options, response, weatherInfo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         appId = 'b0147f6411b11c4795a9f9e4bebc27a3';
                         units = 'metric';
-                        lang = 'en';
                         url = "http://api.openweathermap.org/data/2.5/weather?appid=" + appId + "&units=" + units + "&lat=" + coords[0] + "&lon=" + coords[1];
                         options = {
                             method: 'GET',
@@ -62,6 +61,7 @@ var Weather = /** @class */ (function () {
                         return [4 /*yield*/, response.json()];
                     case 2:
                         weatherInfo = _a.sent();
+                        console.log(weatherInfo);
                         return [2 /*return*/, weatherInfo];
                 }
             });
@@ -78,13 +78,16 @@ var Weather = /** @class */ (function () {
                         return [4 /*yield*/, navigator.geolocation.getCurrentPosition(function (position) {
                                 coords.push(position.coords.latitude.toString());
                                 coords.push(position.coords.longitude.toString());
-                                // console.log(`getCoords(): lat=${coords[0]} / long: ${coords[1]}`);
-                                return coords;
+                                console.log("getCoords(): lat=" + coords[0] + " / long: " + coords[1]);
                             })];
                     case 1:
                         _a.sent();
                         _a.label = 2;
-                    case 2: return [2 /*return*/, coords];
+                    case 2:
+                        console.log("before return: lat=" + coords[0] + " / long: " + coords[1]); //no llegan las coords
+                        return [4 /*yield*/, coords];
+                    case 3: //no llegan las coords
+                    return [2 /*return*/, _a.sent()];
                 }
             });
         });
@@ -100,23 +103,22 @@ var UI2 = /** @class */ (function () {
         var weatherDisplay = document.createElement('p');
         var span = document.createElement('p');
         weatherDisplay.className = "text-primary ms-3";
-        span.className = " ms-3 text-info";
+        span.className = "ms-3 text-info";
         weatherDisplay.textContent = "Today's weather:";
-        span.textContent = "" + data;
+        span.textContent = "" + data.weather[0].main;
         app.appendChild(weatherDisplay);
         app.appendChild(span);
     };
     return UI2;
 }());
 //DOM Events
-window.addEventListener('load', function (evt) {
+window.addEventListener('load', function () {
     var ui = new UI2();
     var weather = new Weather();
-    var coords;
     weather.getCoords()
         .then(function (response) {
-        coords = response;
-        weather.fetchWeather(coords)
-            .then(function (result) { return ui.showWeather((result.weather[0].main)); });
+        console.log(response);
+        weather.fetchWeather(response)
+            .then(function (result) { return ui.showWeather((result)); });
     });
 });
