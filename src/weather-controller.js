@@ -40,19 +40,16 @@ var Weather = /** @class */ (function () {
         this.description = '';
     }
     // La función realiza una llamada a la API y construye/devuelve un objeto Joke con los datos de la respuesta 
-    Weather.prototype.fetchWeather = function () {
+    Weather.prototype.fetchWeather = function (coords) {
         return __awaiter(this, void 0, void 0, function () {
-            var appId, units, locationName, url, options, response, weatherInfo;
+            var appId, units, lang, url, options, response, weatherInfo;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         appId = 'b0147f6411b11c4795a9f9e4bebc27a3';
                         units = 'metric';
-                        return [4 /*yield*/, this.getLocationName()];
-                    case 1:
-                        locationName = _a.sent();
-                        console.log(locationName);
-                        url = "http://api.openweathermap.org/data/2.5/weather?appid=" + appId + "&units=" + units + "&q=copacabana";
+                        lang = 'en';
+                        url = "http://api.openweathermap.org/data/2.5/weather?appid=" + appId + "&units=" + units + "&lat=" + coords[0] + "&lon=" + coords[1];
                         options = {
                             method: 'GET',
                             headers: {
@@ -60,78 +57,34 @@ var Weather = /** @class */ (function () {
                             }
                         };
                         return [4 /*yield*/, fetch(url, options)];
-                    case 2:
+                    case 1:
                         response = _a.sent();
                         return [4 /*yield*/, response.json()];
-                    case 3:
+                    case 2:
                         weatherInfo = _a.sent();
                         return [2 /*return*/, weatherInfo];
                 }
             });
         });
     };
-    // async getCoords(): Promise<Array<string>> {
-    //     let result: Array<string> = [];
-    //     if (navigator.geolocation) {
-    //         await navigator.geolocation.getCurrentPosition((position) => {
-    //             result.push(position.coords.latitude.toString());
-    //             result.push(position.coords.longitude.toString());
-    //             console.log(`getCoords(): lat=${result[0]} / long: ${result[1]}`);
-    //             return result;
-    //         });
-    //     }
-    //     return result;
-    // }
-    Weather.prototype.getLocationName = function () {
+    Weather.prototype.getCoords = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var locationName, appId, coords;
-            var _this = this;
+            var coords;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        locationName = '';
-                        appId = 'b0147f6411b11c4795a9f9e4bebc27a3';
                         coords = [];
                         if (!navigator.geolocation) return [3 /*break*/, 2];
-                        return [4 /*yield*/, navigator.geolocation.getCurrentPosition(function (position) { return __awaiter(_this, void 0, void 0, function () {
-                                var urlReverseGeocoding, options, response;
-                                return __generator(this, function (_a) {
-                                    switch (_a.label) {
-                                        case 0:
-                                            coords.push(position.coords.latitude.toString());
-                                            coords.push(position.coords.longitude.toString());
-                                            // console.log(`getCoords(): lat=${coords[0]} / long: ${coords[1]}`);
-                                            console.log("getCoords(): lat=" + coords[0] + " / long: " + coords[1]);
-                                            urlReverseGeocoding = "http://api.openweathermap.org/geo/1.0/reverse?lat=" + coords[0] + "&lon=" + coords[1] + "&appid=" + appId;
-                                            options = {
-                                                method: 'GET',
-                                                headers: {
-                                                    "Accept": "application/json"
-                                                }
-                                            };
-                                            return [4 /*yield*/, fetch(urlReverseGeocoding, options)];
-                                        case 1:
-                                            response = _a.sent();
-                                            return [4 /*yield*/, response.json()];
-                                        case 2:
-                                            locationName = _a.sent();
-                                            console.log(locationName); //hasta aqui llega el nombre en un json
-                                            /**
-                                             * 0:
-                                            country: "ES"
-                                            lat: 41.3773
-                                            local_names: {ascii: 'Esplugues de Llobregat', ca: 'Esplugues de Llobregat', de: 'Esplugues de Llobregat', en: 'Esplugues de Llobregat', eu: 'Esplugues de Llobregat', …}
-                                            lon: 2.0881
-                                            name: "Esplugues de Llobregat"
-                                             */
-                                            return [2 /*return*/, locationName];
-                                    }
-                                });
-                            }); })];
+                        return [4 /*yield*/, navigator.geolocation.getCurrentPosition(function (position) {
+                                coords.push(position.coords.latitude.toString());
+                                coords.push(position.coords.longitude.toString());
+                                // console.log(`getCoords(): lat=${coords[0]} / long: ${coords[1]}`);
+                                return coords;
+                            })];
                     case 1:
                         _a.sent();
                         _a.label = 2;
-                    case 2: return [2 /*return*/, locationName];
+                    case 2: return [2 /*return*/, coords];
                 }
             });
         });
@@ -139,21 +92,31 @@ var Weather = /** @class */ (function () {
     return Weather;
 }());
 /** Esta clase tiene métodos para gestionar la vista */
-var UI = /** @class */ (function () {
-    function UI() {
+var UI2 = /** @class */ (function () {
+    function UI2() {
     }
-    UI.prototype.showWeather = function (data) {
-        this.weather = data;
+    UI2.prototype.showWeather = function (data) {
         var app = document.querySelector('#app-weather');
         var weatherDisplay = document.createElement('p');
-        weatherDisplay.textContent = data.description;
+        var span = document.createElement('p');
+        weatherDisplay.className = "text-primary ms-3";
+        span.className = " ms-3 text-info";
+        weatherDisplay.textContent = "Today's weather:";
+        span.textContent = "" + data;
         app.appendChild(weatherDisplay);
+        app.appendChild(span);
     };
-    return UI;
+    return UI2;
 }());
 //DOM Events
 window.addEventListener('load', function (evt) {
-    var ui = new UI();
+    var ui = new UI2();
     var weather = new Weather();
-    weather.getLocationName();
+    var coords;
+    weather.getCoords()
+        .then(function (response) {
+        coords = response;
+        weather.fetchWeather(coords)
+            .then(function (result) { return ui.showWeather((result.weather[0].main)); });
+    });
 });

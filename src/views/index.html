@@ -12,16 +12,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./css/style.css">
-
-
 </head>
 
 <body>
     <div class="page">
         <!-- Header Navigation -->
         <header>
-            <div id="app-weather">
-                <p class="ms-3 text-info">#OpenWeatherMap-App</p>
+            <div id="app-weather" class="d-flex flex-row">
+
             </div>
         </header>
         <!-- Main -->
@@ -51,8 +49,18 @@
     </div>
 
     <!--  -->
-    <!-- <script src="../controller/jokes-controller.js"></script> -->
-    <script src="../controller/weather-controller.js"></script>
+    <script>
+        var exports = {}; //Ojo a esta chapuza para evitar este error
+        //Uncaught ReferenceError: exports is not defined at jokes-controller.js:(line)
+    </script>
+
+
+    <script src="../joke.js"></script>
+    <script src="../score.js"></script>
+    <script src="../report.js"></script>
+    <script src="../ui.js"></script>
+    <script src="../jokes-controller.js"></script>
+    <script src="../weather-controller.js"></script>
 </body>
 
 </html>
