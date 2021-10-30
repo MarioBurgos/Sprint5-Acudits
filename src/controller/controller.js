@@ -1,24 +1,30 @@
 "use strict";
 exports.__esModule = true;
+var alert_1 = require("../components/alert/alert");
+var jokes_component_1 = require("../components/jokes/jokes-component");
+var rating_buttons_1 = require("../components/jokes/rating-buttons/rating-buttons");
+var weather_component_1 = require("../components/weather/weather-component");
 var chuckjoke_1 = require("../model/chuckjoke");
 var dadjoke_1 = require("../model/dadjoke");
 var report_1 = require("../model/report");
 var score_1 = require("../model/score");
-var ui_1 = require("../model/ui");
 var weather_1 = require("../model/weather");
 //DOM Events Controller 
-var ui = new ui_1.UI();
 var joke = new dadjoke_1.DadJoke();
 var report = new report_1.Report();
 var weather;
+var weatherComponent = new weather_component_1.WeatherComponent();
+var jokesComponent = new jokes_component_1.JokesComponent();
+var ratingButtons = new rating_buttons_1.RatingButtons();
 /** Event onLoad */
 window.addEventListener('load', function () {
     weather = new weather_1.Weather();
+    weatherComponent = new weather_component_1.WeatherComponent();
     weather.getCoords()
         .then(function (response) {
         console.log(response);
         weather.fetchWeather(response)
-            .then(function (result) { return ui.showWeather((result)); });
+            .then(function (result) { return weatherComponent.showWeather((result)); });
     });
 });
 /** Events onClick */
@@ -31,8 +37,8 @@ document.addEventListener('click', function (evt) {
             joke.fetchAJoke()
                 .then(function (response) {
                 joke = response;
-                ui.showJoke(response);
-                ui.showRatingButtons();
+                jokesComponent.show(response);
+                ratingButtons.show();
             })["catch"](function (error) { return console.error(error); });
             break;
         case "score-button":
@@ -40,10 +46,10 @@ document.addEventListener('click', function (evt) {
             var score = new score_1.Score(joke, points);
             if (report.addScore(score)) {
                 console.log(report);
-                ui.showAlert("You voted " + points + " points", "success");
+                alert_1.Alert.show("You voted " + points + " points", "success");
             }
             else {
-                ui.showAlert("You can't vote twice, bro.", "danger");
+                alert_1.Alert.show("You can't vote twice, bro.", "danger");
             }
             break;
     }

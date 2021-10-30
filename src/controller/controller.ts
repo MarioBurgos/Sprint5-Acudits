@@ -1,25 +1,31 @@
+import { Alert } from "../components/alert/alert";
+import { JokesComponent } from "../components/jokes/jokes-component";
+import { RatingButtons } from "../components/jokes/rating-buttons/rating-buttons";
+import { WeatherComponent } from "../components/weather/weather-component";
 import { IJoke} from "../interfaces/ijoke";
 import { ChuckJoke } from "../model/chuckjoke";
 import { DadJoke } from "../model/dadjoke";
 import { Report } from "../model/report";
 import { Score } from "../model/score";
-import { UI } from "../model/ui";
 import { Weather } from "../model/weather";
 
 //DOM Events Controller 
-const ui: UI = new UI();
 let joke: IJoke = new DadJoke();
 let report: Report = new Report();
 let weather: Weather;
+let weatherComponent: WeatherComponent = new WeatherComponent();
+let jokesComponent: JokesComponent = new JokesComponent();
+let ratingButtons: RatingButtons = new RatingButtons();
 
 /** Event onLoad */
 window.addEventListener('load', () => {
     weather = new Weather();
+    weatherComponent = new WeatherComponent();
     weather.getCoords()
         .then(response => {
             console.log(response);
             weather.fetchWeather(response)
-                .then(result => ui.showWeather((result)));
+                .then(result => weatherComponent.showWeather((result)));
         });
 });
 
@@ -33,8 +39,8 @@ document.addEventListener('click', (evt) => {
             joke.fetchAJoke() 
                 .then(response => {
                     joke = response;
-                    ui.showJoke(response);
-                    ui.showRatingButtons();
+                    jokesComponent.show(response);
+                    ratingButtons.show();
                 })
                 .catch(error => console.error(error));
             break;
@@ -44,9 +50,9 @@ document.addEventListener('click', (evt) => {
             
             if (report.addScore(score)) {
                  console.log(report);
-                ui.showAlert(`You voted ${points} points`, "success");
+                Alert.show(`You voted ${points} points`, "success");
             }else{
-                ui.showAlert(`You can't vote twice, bro.`, "danger");
+                Alert.show(`You can't vote twice, bro.`, "danger");
             }
            
            
