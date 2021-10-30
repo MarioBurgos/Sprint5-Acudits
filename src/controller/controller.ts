@@ -1,4 +1,5 @@
 import { IJoke} from "../interfaces/ijoke";
+import { ChuckJoke } from "../model/chuckjoke";
 import { DadJoke } from "../model/dadjoke";
 import { Report } from "../model/report";
 import { Score } from "../model/score";
@@ -26,8 +27,10 @@ window.addEventListener('load', () => {
 document.addEventListener('click', (evt) => {
     switch ((evt.target as HTMLInputElement).id) {
         case "action-button":
-            joke = new DadJoke();
-            joke.fetchAJoke()
+            // show Dad or Chuck Jokes 50-50
+            (Math.floor(Math.random()*100)%2) ? joke = new DadJoke() : joke = new ChuckJoke();
+            console.log(`Dad: ${joke instanceof DadJoke}`);
+            joke.fetchAJoke() 
                 .then(response => {
                     joke = response;
                     ui.showJoke(response);
@@ -38,8 +41,15 @@ document.addEventListener('click', (evt) => {
         case "score-button":
             let points = parseInt((evt.target as HTMLInputElement).name);
             let score = new Score(joke, points);
-            report.addScore(score);
-            console.log(report);
+            
+            if (report.addScore(score)) {
+                 console.log(report);
+                ui.showAlert(`You voted ${points} points`, "success");
+            }else{
+                ui.showAlert(`You can't vote twice, bro.`, "danger");
+            }
+           
+           
             break;
     }
     /** Intentando sustituir el switch por un action map */
