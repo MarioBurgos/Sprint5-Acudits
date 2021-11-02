@@ -4,6 +4,7 @@ var alert_1 = require("../components/alert/alert");
 var jokes_component_1 = require("../components/jokes/jokes-component");
 var rating_buttons_1 = require("../components/jokes/rating-buttons/rating-buttons");
 var weather_component_1 = require("../components/weather/weather-component");
+var constants_1 = require("../data/constants");
 var chuckjoke_1 = require("../model/chuckjoke");
 var dadjoke_1 = require("../model/dadjoke");
 var report_1 = require("../model/report");
@@ -46,10 +47,10 @@ document.addEventListener('click', function (evt) {
             var score = new score_1.Score(joke, points);
             if (report.addScore(score)) {
                 console.log(report);
-                alert_1.Alert.show("You voted " + points + " points", "success");
+                alert_1.Alert.show(points + " POINTS!! " + constants_1.ALERT.SUCCESS, "success");
             }
             else {
-                alert_1.Alert.show("You can't vote twice, bro.", "danger");
+                alert_1.Alert.show("" + points + constants_1.ALERT.ERROR, "danger");
             }
             break;
     }

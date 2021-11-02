@@ -2,6 +2,7 @@ import { Alert } from "../components/alert/alert";
 import { JokesComponent } from "../components/jokes/jokes-component";
 import { RatingButtons } from "../components/jokes/rating-buttons/rating-buttons";
 import { WeatherComponent } from "../components/weather/weather-component";
+import { ALERT } from "../data/constants";
 import { IJoke} from "../interfaces/ijoke";
 import { ChuckJoke } from "../model/chuckjoke";
 import { DadJoke } from "../model/dadjoke";
@@ -35,7 +36,7 @@ document.addEventListener('click', (evt) => {
         case "action-button":
             // show Dad or Chuck Jokes 50-50
             (Math.floor(Math.random()*100)%2) ? joke = new DadJoke() : joke = new ChuckJoke();
-            console.log(`Dad: ${joke instanceof DadJoke}`);
+            console.log(`isDad: ${joke instanceof DadJoke}`);
             joke.fetchAJoke() 
                 .then(response => {
                     joke = response;
@@ -47,12 +48,11 @@ document.addEventListener('click', (evt) => {
         case "score-button":
             let points = parseInt((evt.target as HTMLInputElement).name);
             let score = new Score(joke, points);
-            
             if (report.addScore(score)) {
                  console.log(report);
-                Alert.show(`You voted ${points} points`, "success");
+                Alert.show(`${points} POINTS!! ${ALERT.SUCCESS}`, "success");
             }else{
-                Alert.show(`You can't vote twice, bro.`, "danger");
+                Alert.show(`${points}${ALERT.ERROR}`, "danger");
             }
            
            
