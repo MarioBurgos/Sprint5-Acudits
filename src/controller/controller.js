@@ -34,7 +34,7 @@ document.addEventListener('click', function (evt) {
         case "action-button":
             // show Dad or Chuck Jokes 50-50
             (Math.floor(Math.random() * 100) % 2) ? joke = new dadjoke_1.DadJoke() : joke = new chuckjoke_1.ChuckJoke();
-            console.log("Dad: " + (joke instanceof dadjoke_1.DadJoke));
+            console.log("isDad: " + (joke instanceof dadjoke_1.DadJoke));
             joke.fetchAJoke()
                 .then(function (response) {
                 joke = response;
