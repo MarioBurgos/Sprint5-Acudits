@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,7 +35,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-/** Esta clase define la estructura de Joke.  Tiene un método que bebe de una API y devuelve nuevos Jokes. */
+exports.__esModule = true;
+exports.Weather = void 0;
 var Weather = /** @class */ (function () {
     function Weather() {
         this.description = '';
@@ -88,40 +90,11 @@ var Weather = /** @class */ (function () {
                         _a.label = 2;
                     case 2:
                         console.log("before return: lat=" + coords[0] + " / long: " + coords[1]); //no llegan las coords
-                        return [4 /*yield*/, coords];
-                    case 3: //no llegan las coords
-                    return [2 /*return*/, _a.sent()];
+                        return [2 /*return*/, coords];
                 }
             });
         });
     };
     return Weather;
 }());
-/** Esta clase tiene métodos para gestionar la vista */
-var UI2 = /** @class */ (function () {
-    function UI2() {
-    }
-    UI2.prototype.showWeather = function (data) {
-        var app = document.querySelector('#app-weather');
-        var weatherDisplay = document.createElement('p');
-        var span = document.createElement('p');
-        weatherDisplay.className = "text-primary ms-3";
-        span.className = "ms-3 text-info";
-        weatherDisplay.textContent = "Today's weather:";
-        span.textContent = "" + data.weather[0].main;
-        app.appendChild(weatherDisplay);
-        app.appendChild(span);
-    };
-    return UI2;
-}());
-//DOM Events
-window.addEventListener('load', function () {
-    var ui = new UI2();
-    var weather = new Weather();
-    weather.getCoords()
-        .then(function (response) {
-        console.log(response);
-        weather.fetchWeather(response)
-            .then(function (result) { return ui.showWeather((result)); });
-    });
-});
+exports.Weather = Weather;

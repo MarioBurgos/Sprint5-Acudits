@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,UAAU,CAAV,MAAU;EACN,IAAI;IACA,OAAO,EAAE,CAAC;;EAEd,EAAE;IACE,OAAO,EAAE,CAAC",
+    "sources": [
+        "fade-in.scss"
+    ],
+    "names": [],
+    "file": "fade-in.css"
+}

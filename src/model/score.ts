@@ -1,13 +1,11 @@
-// import type { IJoke } from "./interfaces/ijoke";
-// import type { IScore } from "./interfaces/iscore";
-import { Joke } from "./joke";
+import { IJoke } from "../interfaces/ijoke";
 
 /** Esta classe representa las puntuaciones de los chistes */
 class Score {
-    joke: Joke;
+    joke: IJoke;
     score: number;
     date: string;
-    constructor(joke: Joke, score: number) {
+    constructor(joke: IJoke, score: number) {
         this.joke = joke;
         this.score = score;
         this.date = new Date().toISOString();

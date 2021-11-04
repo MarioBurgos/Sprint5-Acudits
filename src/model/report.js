@@ -9,13 +9,17 @@ var Report = /** @class */ (function () {
     function Report() {
         this.jokesReport = [];
     }
+    /**If the user had been scored that joke before, returns false */
     Report.prototype.addScore = function (score) {
         //una condición para evitar puntuar el mismo chiste 2 veces
         if (this.jokesReport.find(function (item) { return score.joke === item.joke; })) {
-            //do nothing
+            //    console.log("Report, the score is already here")
+            return false;
         }
         else {
             this.jokesReport.push(score);
+            //    console.log("Report, the score has been added")
+            return true;
         }
     };
     return Report;

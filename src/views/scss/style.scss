@@ -1,3 +1,4 @@
+@import 'animations/fade-in';
 $header-height: 60px;
 $footer-height: 120px;
 $low-opacity: 0.9;
@@ -19,6 +20,15 @@ $translucid: 0.25;
     font-size: 2rem;
 }
 
+.alert {
+    font-size: 1rem;
+}
+
+#app-jokes {
+    display: flex;
+    justify-content: center;
+}
+
 .container-fluid {
     min-height: calc(100vh - 140px);
 }
@@ -27,7 +37,8 @@ $translucid: 0.25;
     content: "";
     background-image: url("../assets/laughing-ppl.png");
     background-size: cover;
-    background-position: center 175px;
+    background-position: center;
+    background-attachment: fixed;
     background-repeat: no-repeat;
     opacity: 0.4;
     top: 0;
@@ -38,18 +49,54 @@ $translucid: 0.25;
     z-index: -1;
 }
 
+@for $i from 1 to 5 {
+    .bg-#{$i} {
+        z-index: 0;
+        padding: 20%;
+        margin: -20%;
+        position: relative;
+        background-image: url("../assets/blobs/blob#{$i}.svg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+input {
+    z-index: 1;
+}
+
 .card {
-    opacity: $low-opacity;
-    margin-top: 5%;
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+    overflow: visible;
+    &-title {
+        z-index: 1;
+    }
+}
+
+.btn-group {
+    @include _fade-in;
+    animation-delay: 0.5s;
+}
+
+i {
+    font-size: 4rem;
+}
+
+button>i {
+    pointer-events: none;
 }
 
 h1 {
+    z-index: 1;
     font-size: 3rem;
     font-weight: 600;
     text-shadow: 2px 2px rgb(0, 175, 215);
 }
 
 footer {
+    z-index: 2;
     height: $footer-height;
     font-size: 1rem;
 }
