@@ -52,7 +52,7 @@ document.addEventListener('click', (evt) => {
                  console.log(report);
                 Alert.show(`${points} POINTS!! ${ALERT.SUCCESS}`, "success");
             }else{
-                Alert.show(`${points}${ALERT.ERROR}`, "danger");
+                Alert.show(`${ALERT.ERROR}`, "danger");
             }
            
            

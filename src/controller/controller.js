@@ -50,7 +50,7 @@ document.addEventListener('click', function (evt) {
                 alert_1.Alert.show(points + " POINTS!! " + constants_1.ALERT.SUCCESS, "success");
             }
             else {
-                alert_1.Alert.show("" + points + constants_1.ALERT.ERROR, "danger");
+                alert_1.Alert.show("" + constants_1.ALERT.ERROR, "danger");
             }
             break;
     }
